@@ -13,8 +13,14 @@ namespace TimetableServer
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "XDApi",
+                routeTemplate: "{controller}/{id}/{type}",
+                defaults: new { id = "", type = "" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
