@@ -13,15 +13,14 @@ namespace TimetableServer
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "XDApi",
-                routeTemplate: "{controller}/{id}/{type}",
-                defaults: new { id = "", type = "" }
-            );
+                name: "Schedules",
+                routeTemplate: "{controller}/{id}/{typeOfSchedule}",
+                defaults: new {id = "", typeOfSchedule = ""});
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "GroupsList",
+                routeTemplate: "{controller}",
+                defaults: new {}
             );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));

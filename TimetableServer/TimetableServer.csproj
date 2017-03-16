@@ -131,15 +131,18 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controlers\GroupsController.cs" />
+    <Compile Include="Controlers\ScheduleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Classroom.cs" />
     <Compile Include="Models\DayOfTheWeek.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\BaseSchedule.cs" />
+    <Compile Include="Models\Schedules\BaseSchedule.cs" />
+    <Compile Include="Models\Schedules\GroupSchedule.cs" />
     <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\Schedules\TeacherSchedule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

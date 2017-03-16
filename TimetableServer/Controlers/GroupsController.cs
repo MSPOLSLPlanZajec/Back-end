@@ -24,20 +24,5 @@ namespace TimetableServer.Controlers
                 }
             };
         }
-
-        public IEnumerable<Group> GetGroupsForIdAndSomething(int id, string type)
-        {
-            return new List<Group>()
-            {
-                new Group()
-                {
-                    id = "XD", name = "InformatykaModzno", groups = new List<Group>()
-                    {
-                        new Group() { id = "XDNO", name = "Semestr 1", groups = null},
-                        new Group() { id = "XDBEKA", name = "Semestr 2", groups = null}
-                    }
-                }
-            };
-        }
     }
 }
