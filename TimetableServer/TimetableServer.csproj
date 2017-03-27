@@ -140,6 +140,7 @@
     <Compile Include="Models\Command.cs" />
     <Compile Include="Models\DayOfTheWeek.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\LessonTimeAndDateSetter.cs" />
     <Compile Include="Models\Schedules\BaseSchedule.cs" />
     <Compile Include="Models\Schedules\GroupSchedule.cs" />
     <Compile Include="Models\Lesson.cs" />

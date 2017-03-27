@@ -5,11 +5,10 @@ using System.Web;
 
 namespace TimetableServer.Models
 {
-    public class Teacher
+    public class LessonTimeAndDateSetter
     {
         public string id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public string title { get; set; }
+        public int day { get; set; }
+        public int startsAt { get; set; }
     }
 }

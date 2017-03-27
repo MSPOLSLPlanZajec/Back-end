@@ -21,15 +21,16 @@ namespace TimetableServer.Controlers
                 case "add_study_plan":
                     return null;
                 case "add_classroom":
-                {
-                    var obj = JsonConvert.DeserializeObject<Classroom>(value.data.ToString());
-                    obj.id = "50";
-                    return JObject.Parse(JsonConvert.SerializeObject(obj));
-                }
+                    var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.data.ToString());
+                    classroomObj.id = "50";
+                    return JObject.Parse(JsonConvert.SerializeObject(classroomObj));
                 case "add_teacher":
-                    return null;
+                    var teacher = JsonConvert.DeserializeObject<Teacher>(value.data.ToString());
+                    teacher.id = "XD";
+                    return JObject.Parse(JsonConvert.SerializeObject(teacher));
                 case "select_start":
-                    return null;
+                    var lessonTDS = JsonConvert.DeserializeObject<LessonTimeAndDateSetter>(value.data.ToString());
+                    return JObject.Parse(JsonConvert.SerializeObject(lessonTDS));
                 default:
                     return null;
             }
