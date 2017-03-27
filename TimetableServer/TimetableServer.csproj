@@ -130,12 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controlers\CommandController.cs" />
     <Compile Include="Controlers\GroupsController.cs" />
     <Compile Include="Controlers\ScheduleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Classroom.cs" />
+    <Compile Include="Models\Command.cs" />
     <Compile Include="Models\DayOfTheWeek.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Schedules\BaseSchedule.cs" />
