@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TimetableServer.Models;
@@ -19,7 +18,8 @@ namespace TimetableServer.Controlers
             switch (value.type)
             {
                 case "add_study_plan":
-                    return null;
+                    var studyPlanObj = JsonConvert.DeserializeObject<StudyPlan>(value.data.ToString());                    
+                    return JObject.Parse(JsonConvert.SerializeObject(studyPlanObj));
                 case "add_classroom":
                     var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.data.ToString());
                     classroomObj.id = "50";

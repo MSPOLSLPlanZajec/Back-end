@@ -16,7 +16,10 @@ namespace TimetableServer
                 name: "Schedules",
                 routeTemplate: "{controller}/{id}/{typeOfSchedule}",
                 defaults: new {id = "", typeOfSchedule = ""});
-
+            config.Routes.MapHttpRoute(
+                name: "TimeSuggestion",
+                routeTemplate: "{controller}/{id}",
+                defaults: new { });
             config.Routes.MapHttpRoute(
                 name: "GroupsList",
                 routeTemplate: "{controller}",
