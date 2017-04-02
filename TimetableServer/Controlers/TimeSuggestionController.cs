@@ -8,7 +8,7 @@ using TimetableServer.Models;
 
 namespace TimetableServer.Controlers
 {
-    [Route("a/{id}")]
+    [Route("time-suggestion/{id}")]
     public class TimeSuggestionController : ApiController
     {
         // GET: api/TimeSuggestion
