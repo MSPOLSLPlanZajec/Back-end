@@ -5,11 +5,11 @@ using System.Web;
 
 namespace TimetableServer.Models
 {
-    public class StudyPlan
+    public class SubGroup
     {
         public string id { get; set; }
-        public string major { get; set; }
-        public List<SubGroup> semesters { get; set; }
-        
+        public string name { get; set; }
+        public List<Lesson> subjects { get; set; }
+        public List<SubGroup> subgroups { get; set; }
     }
 }
