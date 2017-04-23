@@ -1,0 +1,858 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="planModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="classrooms">
+          <Key>
+            <PropertyRef Name="idclassrooms" />
+          </Key>
+          <Property Name="idclassrooms" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="number" Type="varchar" MaxLength="45" />
+          <Property Name="capacity" Type="varchar" MaxLength="45" />
+          <Property Name="idcroomtype" Type="varchar" MaxLength="32" />
+          <Property Name="iddepartment" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="croomtype">
+          <Key>
+            <PropertyRef Name="idcroomtype" />
+          </Key>
+          <Property Name="idcroomtype" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="days">
+          <Key>
+            <PropertyRef Name="iddays" />
+          </Key>
+          <Property Name="iddays" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="iddepartment" />
+          </Key>
+          <Property Name="iddepartment" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="faculty">
+          <Key>
+            <PropertyRef Name="idfaculty" />
+          </Key>
+          <Property Name="idfaculty" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="groups">
+          <Key>
+            <PropertyRef Name="idgroups" />
+          </Key>
+          <Property Name="idgroups" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="idsemesters" Type="varchar" MaxLength="32" />
+          <Property Name="idsupergroup" Type="varchar" MaxLength="32" />
+          <Property Name="idfaculty" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="lessons">
+          <Key>
+            <PropertyRef Name="idlessons" />
+          </Key>
+          <Property Name="idlessons" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="idteachers" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="idsubjects" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="idclassrooms" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="iddays" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="idgroups" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="semesters">
+          <Key>
+            <PropertyRef Name="idsemesters" />
+          </Key>
+          <Property Name="idsemesters" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="subjects">
+          <Key>
+            <PropertyRef Name="idsubjects" />
+          </Key>
+          <Property Name="idsubjects" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="time" Type="varchar" MaxLength="32" />
+          <Property Name="type" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="teachers">
+          <Key>
+            <PropertyRef Name="idteachers" />
+          </Key>
+          <Property Name="idteachers" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="surname" Type="varchar" MaxLength="45" />
+          <Property Name="idtitles" Type="varchar" MaxLength="32" />
+          <Property Name="idclassrooms" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="teaching">
+          <Key>
+            <PropertyRef Name="idmain" />
+          </Key>
+          <Property Name="idteachers" Type="varchar" MaxLength="32" />
+          <Property Name="idsubjects" Type="varchar" MaxLength="32" />
+          <Property Name="idmain" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="titles">
+          <Key>
+            <PropertyRef Name="idtitles" />
+          </Key>
+          <Property Name="idtitles" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_croom">
+          <End Role="classrooms" Type="Self.classrooms" Multiplicity="0..1" />
+          <End Role="teachers" Type="Self.teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classrooms">
+              <PropertyRef Name="idclassrooms" />
+            </Principal>
+            <Dependent Role="teachers">
+              <PropertyRef Name="idclassrooms" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_day">
+          <End Role="days" Type="Self.days" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="days">
+              <PropertyRef Name="iddays" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="iddays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dep">
+          <End Role="department" Type="Self.department" Multiplicity="0..1" />
+          <End Role="classrooms" Type="Self.classrooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="iddepartment" />
+            </Principal>
+            <Dependent Role="classrooms">
+              <PropertyRef Name="iddepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_facu">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="idfaculty" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="idfaculty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_group">
+          <End Role="groups" Type="Self.groups" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idgroups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_room">
+          <End Role="classrooms" Type="Self.classrooms" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classrooms">
+              <PropertyRef Name="idclassrooms" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idclassrooms" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_roomtype">
+          <End Role="croomtype" Type="Self.croomtype" Multiplicity="0..1" />
+          <End Role="classrooms" Type="Self.classrooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="croomtype">
+              <PropertyRef Name="idcroomtype" />
+            </Principal>
+            <Dependent Role="classrooms">
+              <PropertyRef Name="idcroomtype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sem">
+          <End Role="semesters" Type="Self.semesters" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semesters">
+              <PropertyRef Name="idsemesters" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="idsemesters" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sg">
+          <End Role="groups" Type="Self.groups" Multiplicity="0..1" />
+          <End Role="groups1" Type="Self.groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="groups1">
+              <PropertyRef Name="idsupergroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sub">
+          <End Role="subjects" Type="Self.subjects" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="idsubjects" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idsubjects" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sub_t">
+          <End Role="subjects" Type="Self.subjects" Multiplicity="0..1" />
+          <End Role="teaching" Type="Self.teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="idsubjects" />
+            </Principal>
+            <Dependent Role="teaching">
+              <PropertyRef Name="idsubjects" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher">
+          <End Role="teachers" Type="Self.teachers" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teachers">
+              <PropertyRef Name="idteachers" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idteachers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_t">
+          <End Role="teachers" Type="Self.teachers" Multiplicity="0..1" />
+          <End Role="teaching" Type="Self.teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teachers">
+              <PropertyRef Name="idteachers" />
+            </Principal>
+            <Dependent Role="teaching">
+              <PropertyRef Name="idteachers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_title">
+          <End Role="titles" Type="Self.titles" Multiplicity="0..1" />
+          <End Role="teachers" Type="Self.teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="titles">
+              <PropertyRef Name="idtitles" />
+            </Principal>
+            <Dependent Role="teachers">
+              <PropertyRef Name="idtitles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="planModelStoreContainer">
+          <EntitySet Name="classrooms" EntityType="Self.classrooms" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="croomtype" EntityType="Self.croomtype" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="days" EntityType="Self.days" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="faculty" EntityType="Self.faculty" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="groups" EntityType="Self.groups" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="lessons" EntityType="Self.lessons" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="semesters" EntityType="Self.semesters" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="subjects" EntityType="Self.subjects" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="teachers" EntityType="Self.teachers" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="teaching" EntityType="Self.teaching" Schema="19559539_plan" store:Type="Tables" />
+          <EntitySet Name="titles" EntityType="Self.titles" Schema="19559539_plan" store:Type="Tables" />
+          <AssociationSet Name="fk_croom" Association="Self.fk_croom">
+            <End Role="classrooms" EntitySet="classrooms" />
+            <End Role="teachers" EntitySet="teachers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_day" Association="Self.fk_day">
+            <End Role="days" EntitySet="days" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dep" Association="Self.fk_dep">
+            <End Role="department" EntitySet="department" />
+            <End Role="classrooms" EntitySet="classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="fk_facu" Association="Self.fk_facu">
+            <End Role="faculty" EntitySet="faculty" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_group" Association="Self.fk_group">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_room" Association="Self.fk_room">
+            <End Role="classrooms" EntitySet="classrooms" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_roomtype" Association="Self.fk_roomtype">
+            <End Role="croomtype" EntitySet="croomtype" />
+            <End Role="classrooms" EntitySet="classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sem" Association="Self.fk_sem">
+            <End Role="semesters" EntitySet="semesters" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sg" Association="Self.fk_sg">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="groups1" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sub" Association="Self.fk_sub">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sub_t" Association="Self.fk_sub_t">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="teaching" EntitySet="teaching" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher" Association="Self.fk_teacher">
+            <End Role="teachers" EntitySet="teachers" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_t" Association="Self.fk_teacher_t">
+            <End Role="teachers" EntitySet="teachers" />
+            <End Role="teaching" EntitySet="teaching" />
+          </AssociationSet>
+          <AssociationSet Name="fk_title" Association="Self.fk_title">
+            <End Role="titles" EntitySet="titles" />
+            <End Role="teachers" EntitySet="teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="planModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="classroom">
+          <Key>
+            <PropertyRef Name="idclassrooms" />
+          </Key>
+          <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="number" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="capacity" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="idcroomtype" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="iddepartment" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="teachers" Relationship="Self.fk_croom" FromRole="classrooms" ToRole="teachers" />
+          <NavigationProperty Name="department" Relationship="Self.fk_dep" FromRole="classrooms" ToRole="department" />
+          <NavigationProperty Name="lessons" Relationship="Self.fk_room" FromRole="classrooms" ToRole="lessons" />
+          <NavigationProperty Name="croomtype" Relationship="Self.fk_roomtype" FromRole="classrooms" ToRole="croomtype" />
+        </EntityType>
+        <EntityType Name="croomtype">
+          <Key>
+            <PropertyRef Name="idcroomtype" />
+          </Key>
+          <Property Name="idcroomtype" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="classrooms" Relationship="Self.fk_roomtype" FromRole="croomtype" ToRole="classrooms" />
+        </EntityType>
+        <EntityType Name="day">
+          <Key>
+            <PropertyRef Name="iddays" />
+          </Key>
+          <Property Name="iddays" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="lessons" Relationship="Self.fk_day" FromRole="days" ToRole="lessons" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="iddepartment" />
+          </Key>
+          <Property Name="iddepartment" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="classrooms" Relationship="Self.fk_dep" FromRole="department" ToRole="classrooms" />
+        </EntityType>
+        <EntityType Name="faculty">
+          <Key>
+            <PropertyRef Name="idfaculty" />
+          </Key>
+          <Property Name="idfaculty" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="groups" Relationship="Self.fk_facu" FromRole="faculty" ToRole="groups" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="idgroups" />
+          </Key>
+          <Property Name="idgroups" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="idsemesters" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="idsupergroup" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="idfaculty" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="faculty" Relationship="Self.fk_facu" FromRole="groups" ToRole="faculty" />
+          <NavigationProperty Name="lessons" Relationship="Self.fk_group" FromRole="groups" ToRole="lessons" />
+          <NavigationProperty Name="semester" Relationship="Self.fk_sem" FromRole="groups" ToRole="semesters" />
+          <NavigationProperty Name="groups1" Relationship="Self.fk_sg" FromRole="groups" ToRole="groups1" />
+          <NavigationProperty Name="group1" Relationship="Self.fk_sg" FromRole="groups1" ToRole="groups" />
+        </EntityType>
+        <EntityType Name="lesson">
+          <Key>
+            <PropertyRef Name="idlessons" />
+          </Key>
+          <Property Name="idlessons" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idteachers" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idsubjects" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iddays" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idgroups" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="classroom" Relationship="Self.fk_room" FromRole="lessons" ToRole="classrooms" />
+          <NavigationProperty Name="day" Relationship="Self.fk_day" FromRole="lessons" ToRole="days" />
+          <NavigationProperty Name="group" Relationship="Self.fk_group" FromRole="lessons" ToRole="groups" />
+          <NavigationProperty Name="subject" Relationship="Self.fk_sub" FromRole="lessons" ToRole="subjects" />
+          <NavigationProperty Name="teacher" Relationship="Self.fk_teacher" FromRole="lessons" ToRole="teachers" />
+        </EntityType>
+        <EntityType Name="semester">
+          <Key>
+            <PropertyRef Name="idsemesters" />
+          </Key>
+          <Property Name="idsemesters" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="groups" Relationship="Self.fk_sem" FromRole="semesters" ToRole="groups" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="idsubjects" />
+          </Key>
+          <Property Name="idsubjects" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="time" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="lessons" Relationship="Self.fk_sub" FromRole="subjects" ToRole="lessons" />
+          <NavigationProperty Name="teachings" Relationship="Self.fk_sub_t" FromRole="subjects" ToRole="teaching" />
+        </EntityType>
+        <EntityType Name="teacher">
+          <Key>
+            <PropertyRef Name="idteachers" />
+          </Key>
+          <Property Name="idteachers" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="idtitles" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="classroom" Relationship="Self.fk_croom" FromRole="teachers" ToRole="classrooms" />
+          <NavigationProperty Name="lessons" Relationship="Self.fk_teacher" FromRole="teachers" ToRole="lessons" />
+          <NavigationProperty Name="teachings" Relationship="Self.fk_teacher_t" FromRole="teachers" ToRole="teaching" />
+          <NavigationProperty Name="title" Relationship="Self.fk_title" FromRole="teachers" ToRole="titles" />
+        </EntityType>
+        <EntityType Name="teaching">
+          <Key>
+            <PropertyRef Name="idmain" />
+          </Key>
+          <Property Name="idteachers" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="idsubjects" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="idmain" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="subject" Relationship="Self.fk_sub_t" FromRole="teaching" ToRole="subjects" />
+          <NavigationProperty Name="teacher" Relationship="Self.fk_teacher_t" FromRole="teaching" ToRole="teachers" />
+        </EntityType>
+        <EntityType Name="title">
+          <Key>
+            <PropertyRef Name="idtitles" />
+          </Key>
+          <Property Name="idtitles" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="teachers" Relationship="Self.fk_title" FromRole="titles" ToRole="teachers" />
+        </EntityType>
+        <Association Name="fk_croom">
+          <End Role="classrooms" Type="Self.classroom" Multiplicity="0..1" />
+          <End Role="teachers" Type="Self.teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classrooms">
+              <PropertyRef Name="idclassrooms" />
+            </Principal>
+            <Dependent Role="teachers">
+              <PropertyRef Name="idclassrooms" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dep">
+          <End Role="department" Type="Self.department" Multiplicity="0..1" />
+          <End Role="classrooms" Type="Self.classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="iddepartment" />
+            </Principal>
+            <Dependent Role="classrooms">
+              <PropertyRef Name="iddepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_room">
+          <End Role="classrooms" Type="Self.classroom" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="classrooms">
+              <PropertyRef Name="idclassrooms" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idclassrooms" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_roomtype">
+          <End Role="croomtype" Type="Self.croomtype" Multiplicity="0..1" />
+          <End Role="classrooms" Type="Self.classroom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="croomtype">
+              <PropertyRef Name="idcroomtype" />
+            </Principal>
+            <Dependent Role="classrooms">
+              <PropertyRef Name="idcroomtype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_day">
+          <End Role="days" Type="Self.day" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="days">
+              <PropertyRef Name="iddays" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="iddays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_facu">
+          <End Role="faculty" Type="Self.faculty" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty">
+              <PropertyRef Name="idfaculty" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="idfaculty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_group">
+          <End Role="groups" Type="Self.group" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idgroups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sem">
+          <End Role="semesters" Type="Self.semester" Multiplicity="0..1" />
+          <End Role="groups" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="semesters">
+              <PropertyRef Name="idsemesters" />
+            </Principal>
+            <Dependent Role="groups">
+              <PropertyRef Name="idsemesters" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sg">
+          <End Role="groups" Type="Self.group" Multiplicity="0..1" />
+          <End Role="groups1" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="groups">
+              <PropertyRef Name="idgroups" />
+            </Principal>
+            <Dependent Role="groups1">
+              <PropertyRef Name="idsupergroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sub">
+          <End Role="subjects" Type="Self.subject" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="idsubjects" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idsubjects" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher">
+          <End Role="teachers" Type="Self.teacher" Multiplicity="1" />
+          <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teachers">
+              <PropertyRef Name="idteachers" />
+            </Principal>
+            <Dependent Role="lessons">
+              <PropertyRef Name="idteachers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sub_t">
+          <End Role="subjects" Type="Self.subject" Multiplicity="0..1" />
+          <End Role="teaching" Type="Self.teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subjects">
+              <PropertyRef Name="idsubjects" />
+            </Principal>
+            <Dependent Role="teaching">
+              <PropertyRef Name="idsubjects" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_teacher_t">
+          <End Role="teachers" Type="Self.teacher" Multiplicity="0..1" />
+          <End Role="teaching" Type="Self.teaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teachers">
+              <PropertyRef Name="idteachers" />
+            </Principal>
+            <Dependent Role="teaching">
+              <PropertyRef Name="idteachers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_title">
+          <End Role="titles" Type="Self.title" Multiplicity="0..1" />
+          <End Role="teachers" Type="Self.teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="titles">
+              <PropertyRef Name="idtitles" />
+            </Principal>
+            <Dependent Role="teachers">
+              <PropertyRef Name="idtitles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TimeTableEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="classrooms" EntityType="Self.classroom" />
+          <EntitySet Name="croomtypes" EntityType="Self.croomtype" />
+          <EntitySet Name="days" EntityType="Self.day" />
+          <EntitySet Name="departments" EntityType="Self.department" />
+          <EntitySet Name="faculties" EntityType="Self.faculty" />
+          <EntitySet Name="groups" EntityType="Self.group" />
+          <EntitySet Name="lessons" EntityType="Self.lesson" />
+          <EntitySet Name="semesters" EntityType="Self.semester" />
+          <EntitySet Name="subjects" EntityType="Self.subject" />
+          <EntitySet Name="teachers" EntityType="Self.teacher" />
+          <EntitySet Name="teachings" EntityType="Self.teaching" />
+          <EntitySet Name="titles" EntityType="Self.title" />
+          <AssociationSet Name="fk_croom" Association="Self.fk_croom">
+            <End Role="classrooms" EntitySet="classrooms" />
+            <End Role="teachers" EntitySet="teachers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dep" Association="Self.fk_dep">
+            <End Role="department" EntitySet="departments" />
+            <End Role="classrooms" EntitySet="classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="fk_room" Association="Self.fk_room">
+            <End Role="classrooms" EntitySet="classrooms" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_roomtype" Association="Self.fk_roomtype">
+            <End Role="croomtype" EntitySet="croomtypes" />
+            <End Role="classrooms" EntitySet="classrooms" />
+          </AssociationSet>
+          <AssociationSet Name="fk_day" Association="Self.fk_day">
+            <End Role="days" EntitySet="days" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_facu" Association="Self.fk_facu">
+            <End Role="faculty" EntitySet="faculties" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_group" Association="Self.fk_group">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sem" Association="Self.fk_sem">
+            <End Role="semesters" EntitySet="semesters" />
+            <End Role="groups" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sg" Association="Self.fk_sg">
+            <End Role="groups" EntitySet="groups" />
+            <End Role="groups1" EntitySet="groups" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sub" Association="Self.fk_sub">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher" Association="Self.fk_teacher">
+            <End Role="teachers" EntitySet="teachers" />
+            <End Role="lessons" EntitySet="lessons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sub_t" Association="Self.fk_sub_t">
+            <End Role="subjects" EntitySet="subjects" />
+            <End Role="teaching" EntitySet="teachings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_teacher_t" Association="Self.fk_teacher_t">
+            <End Role="teachers" EntitySet="teachers" />
+            <End Role="teaching" EntitySet="teachings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_title" Association="Self.fk_title">
+            <End Role="titles" EntitySet="titles" />
+            <End Role="teachers" EntitySet="teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="planModelStoreContainer" CdmEntityContainer="TimeTableEntities">
+          <EntitySetMapping Name="classrooms">
+            <EntityTypeMapping TypeName="planModel.classroom">
+              <MappingFragment StoreEntitySet="classrooms">
+                <ScalarProperty Name="idclassrooms" ColumnName="idclassrooms" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="idcroomtype" ColumnName="idcroomtype" />
+                <ScalarProperty Name="iddepartment" ColumnName="iddepartment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="croomtypes">
+            <EntityTypeMapping TypeName="planModel.croomtype">
+              <MappingFragment StoreEntitySet="croomtype">
+                <ScalarProperty Name="idcroomtype" ColumnName="idcroomtype" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="days">
+            <EntityTypeMapping TypeName="planModel.day">
+              <MappingFragment StoreEntitySet="days">
+                <ScalarProperty Name="iddays" ColumnName="iddays" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="planModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="iddepartment" ColumnName="iddepartment" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="faculties">
+            <EntityTypeMapping TypeName="planModel.faculty">
+              <MappingFragment StoreEntitySet="faculty">
+                <ScalarProperty Name="idfaculty" ColumnName="idfaculty" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groups">
+            <EntityTypeMapping TypeName="planModel.group">
+              <MappingFragment StoreEntitySet="groups">
+                <ScalarProperty Name="idgroups" ColumnName="idgroups" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idsemesters" ColumnName="idsemesters" />
+                <ScalarProperty Name="idsupergroup" ColumnName="idsupergroup" />
+                <ScalarProperty Name="idfaculty" ColumnName="idfaculty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lessons">
+            <EntityTypeMapping TypeName="planModel.lesson">
+              <MappingFragment StoreEntitySet="lessons">
+                <ScalarProperty Name="idlessons" ColumnName="idlessons" />
+                <ScalarProperty Name="idteachers" ColumnName="idteachers" />
+                <ScalarProperty Name="idsubjects" ColumnName="idsubjects" />
+                <ScalarProperty Name="idclassrooms" ColumnName="idclassrooms" />
+                <ScalarProperty Name="iddays" ColumnName="iddays" />
+                <ScalarProperty Name="idgroups" ColumnName="idgroups" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="semesters">
+            <EntityTypeMapping TypeName="planModel.semester">
+              <MappingFragment StoreEntitySet="semesters">
+                <ScalarProperty Name="idsemesters" ColumnName="idsemesters" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subjects">
+            <EntityTypeMapping TypeName="planModel.subject">
+              <MappingFragment StoreEntitySet="subjects">
+                <ScalarProperty Name="idsubjects" ColumnName="idsubjects" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teachers">
+            <EntityTypeMapping TypeName="planModel.teacher">
+              <MappingFragment StoreEntitySet="teachers">
+                <ScalarProperty Name="idteachers" ColumnName="idteachers" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="idtitles" ColumnName="idtitles" />
+                <ScalarProperty Name="idclassrooms" ColumnName="idclassrooms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teachings">
+            <EntityTypeMapping TypeName="planModel.teaching">
+              <MappingFragment StoreEntitySet="teaching">
+                <ScalarProperty Name="idteachers" ColumnName="idteachers" />
+                <ScalarProperty Name="idsubjects" ColumnName="idsubjects" />
+                <ScalarProperty Name="idmain" ColumnName="idmain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="titles">
+            <EntityTypeMapping TypeName="planModel.title">
+              <MappingFragment StoreEntitySet="titles">
+                <ScalarProperty Name="idtitles" ColumnName="idtitles" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

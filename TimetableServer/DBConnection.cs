@@ -5,6 +5,9 @@ using System.Web;
 using MySql.Data;
 using System.Data;
 
+//LEGACY
+//DO NOT USE
+
 namespace TimetableServer
 {
     public class DBConnection
