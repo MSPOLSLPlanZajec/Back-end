@@ -161,6 +161,13 @@ namespace TimetableServer
             database.SaveChanges();
         }
 
+        public List<group> getGroupsWithParentGroupId(string id)
+        {
+            List<group> groupsList = new List<group>();
+            groupsList.AddRange(database.groups.Where(gr => gr.idsupergroup == id));
+            return groupsList;
+        }
+
         public group getGroup(string id)
         {
             group gr = database.groups.First(data => data.idgroups == id);
@@ -278,6 +285,11 @@ namespace TimetableServer
             teacher tchr = database.teachers.First(data => data.idteachers == id);
             return tchr;
         }
+
+        public List<teacher> GetAllTeachers()
+        {
+            return database.teachers.ToList();
+        } 
 
         public void updateTeacher(string id, teacher tchr)
         {

@@ -10,20 +10,29 @@ namespace TimetableServer.Controlers
 {
     public class TeacherController : ApiController
     {
+        private DataBase db = new DataBase();
+
         // GET: api/Teacher
         public IEnumerable<Teacher> GetAllTeachers()
         {
-            return new List<Teacher>()
-            {
-                new Teacher() { id="1",name="Jan",surname="Kowalski",title="dr inz"},
-                new Teacher() { id="2",name="Janina",surname="Kowalska",title="dr hab inz"},
-
-
-            };
+            db = db ?? new DataBase();
+            return
+                convertDBTeachersToTeachers(db.GetAllTeachers());
         }
 
-        
-
-      
+        private List<Teacher> convertDBTeachersToTeachers(List<teacher> dbTeachers)
+        {
+            List<Teacher> Teachers = new List<Teacher>();
+            foreach (var dbteacher in dbTeachers)
+            {
+                var t = new Teacher();
+                t.name = dbteacher.name;
+                t.id = dbteacher.idteachers;
+                t.surname = dbteacher.surname;
+                t.title = db.getTitle(dbteacher.idtitles).name;
+                Teachers.Add(t);
+            }
+            return Teachers;
+        }
     }
 }
