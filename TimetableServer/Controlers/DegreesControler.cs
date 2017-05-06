@@ -16,10 +16,7 @@ namespace TimetableServer.Controlers
             var titles = db.getTitles();
             return titles.Select(a => new Degree() { id=a.idtitles,title=a.name}).ToList();
 
-            //return new List<Degree>()
-            //{
-            //   new Degree() {id=title.idtitles,title=title.name }               
-            //};
+           
         }
     }
 }
