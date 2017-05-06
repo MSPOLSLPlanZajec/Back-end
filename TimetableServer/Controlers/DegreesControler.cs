@@ -10,13 +10,13 @@ namespace TimetableServer.Controlers
 {
     public class DegreeController : ApiController
     {
+        private DataBase db = new DataBase();
         public IEnumerable<Degree> GetAllDegrees()
         {
-            DataBase db = new DataBase();
+            db = db ?? new DataBase();
             var titles = db.getTitles();
-            return titles.Select(a => new Degree() { id=a.idtitles,title=a.name}).ToList();
+            return titles.Select(a => new Degree() { id = a.idtitles, title = a.name }).ToList();
 
-           
         }
     }
 }
