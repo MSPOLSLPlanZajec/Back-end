@@ -12,11 +12,14 @@ namespace TimetableServer.Controlers
     {
         public IEnumerable<Degree> GetAllDegrees()
         {
-            return new List<Degree>()
-            {
-               new Degree() {id="1",title="dr" },
-               new Degree() {id="1",title="prof dr hab." }
-            };
+            DataBase db = new DataBase();
+            var titles = db.getTitles();
+            return titles.Select(a => new Degree() { id=a.idtitles,title=a.name}).ToList();
+
+            //return new List<Degree>()
+            //{
+            //   new Degree() {id=title.idtitles,title=title.name }               
+            //};
         }
     }
 }

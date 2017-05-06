@@ -9,7 +9,7 @@ namespace TimetableServer
     {
         private TimeTableEntities database;
 
-        DataBase()
+       public DataBase()
         {
             database = new TimeTableEntities();
         }
@@ -334,7 +334,11 @@ namespace TimetableServer
             title tit = database.titles.First(data => data.idtitles == id);
             return tit;
         }
-
+        public List<title> getTitles()
+        {
+            var tit = database.titles.ToList<title>();
+            return tit;
+        }
         public void updateTitle(string id, title tit)
         {
             title dbtit = database.titles.First(data => data.idtitles == id);
