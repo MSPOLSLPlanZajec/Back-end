@@ -201,7 +201,7 @@ namespace TimetableServer
             lesson l = database.lessons.First(data => data.idlessons == id);
             return l;
         }
-
+       
         public void updateLesson(string id, lesson l)
         {
             lesson dbl = database.lessons.First(data => data.idlessons == id);
@@ -256,6 +256,11 @@ namespace TimetableServer
         {
             subject sub = database.subjects.First(data => data.idsubjects == id);
             return sub;
+        }
+        public List<subject> getAllSubjects()
+        {
+            return database.subjects.ToList<subject>();
+         
         }
 
         public void updateSubject(string id, subject sub)
