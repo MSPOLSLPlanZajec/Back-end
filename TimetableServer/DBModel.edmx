@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="planModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TimeTableModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="classrooms">
           <Key>
             <PropertyRef Name="idclassrooms" />
@@ -63,6 +63,7 @@
           <Property Name="idclassrooms" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="iddays" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="idgroups" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="start" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="semesters">
           <Key>
@@ -273,7 +274,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="planModelStoreContainer">
+        <EntityContainer Name="TimeTableModelStoreContainer">
           <EntitySet Name="classrooms" EntityType="Self.classrooms" Schema="19559539_plan" store:Type="Tables" />
           <EntitySet Name="croomtype" EntityType="Self.croomtype" Schema="19559539_plan" store:Type="Tables" />
           <EntitySet Name="days" EntityType="Self.days" Schema="19559539_plan" store:Type="Tables" />
@@ -347,7 +348,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="planModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TimeTableModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="classroom">
           <Key>
             <PropertyRef Name="idclassrooms" />
@@ -419,6 +420,7 @@
           <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="iddays" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idgroups" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start" Type="Int32" Nullable="false" />
           <NavigationProperty Name="classroom" Relationship="Self.fk_room" FromRole="lessons" ToRole="classrooms" />
           <NavigationProperty Name="day" Relationship="Self.fk_day" FromRole="lessons" ToRole="days" />
           <NavigationProperty Name="group" Relationship="Self.fk_group" FromRole="lessons" ToRole="groups" />
@@ -719,9 +721,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="planModelStoreContainer" CdmEntityContainer="TimeTableEntities">
+        <EntityContainerMapping StorageEntityContainer="TimeTableModelStoreContainer" CdmEntityContainer="TimeTableEntities">
           <EntitySetMapping Name="classrooms">
-            <EntityTypeMapping TypeName="planModel.classroom">
+            <EntityTypeMapping TypeName="TimeTableModel.classroom">
               <MappingFragment StoreEntitySet="classrooms">
                 <ScalarProperty Name="idclassrooms" ColumnName="idclassrooms" />
                 <ScalarProperty Name="number" ColumnName="number" />
@@ -732,7 +734,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="croomtypes">
-            <EntityTypeMapping TypeName="planModel.croomtype">
+            <EntityTypeMapping TypeName="TimeTableModel.croomtype">
               <MappingFragment StoreEntitySet="croomtype">
                 <ScalarProperty Name="idcroomtype" ColumnName="idcroomtype" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -740,7 +742,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="days">
-            <EntityTypeMapping TypeName="planModel.day">
+            <EntityTypeMapping TypeName="TimeTableModel.day">
               <MappingFragment StoreEntitySet="days">
                 <ScalarProperty Name="iddays" ColumnName="iddays" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -748,7 +750,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="departments">
-            <EntityTypeMapping TypeName="planModel.department">
+            <EntityTypeMapping TypeName="TimeTableModel.department">
               <MappingFragment StoreEntitySet="department">
                 <ScalarProperty Name="iddepartment" ColumnName="iddepartment" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -756,7 +758,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="faculties">
-            <EntityTypeMapping TypeName="planModel.faculty">
+            <EntityTypeMapping TypeName="TimeTableModel.faculty">
               <MappingFragment StoreEntitySet="faculty">
                 <ScalarProperty Name="idfaculty" ColumnName="idfaculty" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -764,7 +766,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="groups">
-            <EntityTypeMapping TypeName="planModel.group">
+            <EntityTypeMapping TypeName="TimeTableModel.group">
               <MappingFragment StoreEntitySet="groups">
                 <ScalarProperty Name="idgroups" ColumnName="idgroups" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -775,7 +777,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="lessons">
-            <EntityTypeMapping TypeName="planModel.lesson">
+            <EntityTypeMapping TypeName="TimeTableModel.lesson">
               <MappingFragment StoreEntitySet="lessons">
                 <ScalarProperty Name="idlessons" ColumnName="idlessons" />
                 <ScalarProperty Name="idteachers" ColumnName="idteachers" />
@@ -783,11 +785,12 @@
                 <ScalarProperty Name="idclassrooms" ColumnName="idclassrooms" />
                 <ScalarProperty Name="iddays" ColumnName="iddays" />
                 <ScalarProperty Name="idgroups" ColumnName="idgroups" />
+                <ScalarProperty Name="start" ColumnName="start" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="semesters">
-            <EntityTypeMapping TypeName="planModel.semester">
+            <EntityTypeMapping TypeName="TimeTableModel.semester">
               <MappingFragment StoreEntitySet="semesters">
                 <ScalarProperty Name="idsemesters" ColumnName="idsemesters" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -795,7 +798,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="subjects">
-            <EntityTypeMapping TypeName="planModel.subject">
+            <EntityTypeMapping TypeName="TimeTableModel.subject">
               <MappingFragment StoreEntitySet="subjects">
                 <ScalarProperty Name="idsubjects" ColumnName="idsubjects" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -805,7 +808,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="teachers">
-            <EntityTypeMapping TypeName="planModel.teacher">
+            <EntityTypeMapping TypeName="TimeTableModel.teacher">
               <MappingFragment StoreEntitySet="teachers">
                 <ScalarProperty Name="idteachers" ColumnName="idteachers" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -816,7 +819,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="teachings">
-            <EntityTypeMapping TypeName="planModel.teaching">
+            <EntityTypeMapping TypeName="TimeTableModel.teaching">
               <MappingFragment StoreEntitySet="teaching">
                 <ScalarProperty Name="idteachers" ColumnName="idteachers" />
                 <ScalarProperty Name="idsubjects" ColumnName="idsubjects" />
@@ -825,7 +828,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="titles">
-            <EntityTypeMapping TypeName="planModel.title">
+            <EntityTypeMapping TypeName="TimeTableModel.title">
               <MappingFragment StoreEntitySet="titles">
                 <ScalarProperty Name="idtitles" ColumnName="idtitles" />
                 <ScalarProperty Name="name" ColumnName="name" />

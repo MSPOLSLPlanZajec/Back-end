@@ -4,33 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a21c8a19201e42f4a4f77dc30500cd99" Name="Diagram1">
-        <EntityTypeShape EntityType="planModel.classroom" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.croomtype" Width="1.5" PointX="1.5" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.day" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.department" Width="1.5" PointX="1.5" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.faculty" Width="1.5" PointX="1.5" PointY="24.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.group" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.lesson" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.semester" Width="1.5" PointX="1.5" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.subject" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.teacher" Width="1.5" PointX="0.75" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.teaching" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="planModel.title" Width="1.5" PointX="1.5" PointY="32.875" IsExpanded="true" />
-        <AssociationConnector Association="planModel.fk_croom" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_dep" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_room" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_roomtype" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_day" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_facu" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_group" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_sem" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_sg" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_sub" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_teacher" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_sub_t" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_teacher_t" ManuallyRouted="false" />
-        <AssociationConnector Association="planModel.fk_title" ManuallyRouted="false" />
+      <Diagram DiagramId="cca86c1e70a74b7da9a840f244aff459" Name="Diagram1">
+        <EntityTypeShape EntityType="TimeTableModel.classroom" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.croomtype" Width="1.5" PointX="1.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.day" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.department" Width="1.5" PointX="1.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.faculty" Width="1.5" PointX="1.5" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.group" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.lesson" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.semester" Width="1.5" PointX="1.5" PointY="27" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.subject" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.teacher" Width="1.5" PointX="0.75" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.teaching" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TimeTableModel.title" Width="1.5" PointX="1.5" PointY="33" IsExpanded="true" />
+        <AssociationConnector Association="TimeTableModel.fk_croom" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_dep" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_room" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_roomtype" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_day" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_facu" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_group" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_sem" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_sg" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_sub" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_sub_t" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_teacher_t" ManuallyRouted="false" />
+        <AssociationConnector Association="TimeTableModel.fk_title" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

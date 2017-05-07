@@ -27,6 +27,11 @@ namespace TimetableServer
             return cr;
         }
 
+        public List<classroom> getAllClassRooms()
+        {
+            return database.classrooms.ToList();
+        }
+
         public void updateClassRoom(string id, classroom cr)
         {
             classroom dbcr = database.classrooms.First(data => data.idclassrooms == id);
@@ -53,6 +58,11 @@ namespace TimetableServer
         {
             croomtype crt = database.croomtypes.First(data => data.idcroomtype == id);
             return crt;
+        }
+
+        public List<croomtype> getAllCRTypes()
+        {
+            return database.croomtypes.ToList();
         }
 
         public void updateCRType(string id, croomtype crt)
@@ -83,6 +93,11 @@ namespace TimetableServer
             return d;
         }
 
+        public List<day> getAllDays()
+        {
+            return database.days.ToList();
+        }
+
         public void updateDays(string id, day d)
         {
             day dbd = database.days.First(data => data.iddays == id);
@@ -111,6 +126,11 @@ namespace TimetableServer
             return d;
         }
 
+        public List<department> getAllDepartments()
+        {
+            return database.departments.ToList();
+        }
+
         public void updateDepartment(string id, department d)
         {
             department dbd = database.departments.First(data => data.iddepartment == id);
@@ -137,6 +157,11 @@ namespace TimetableServer
         {
             faculty f = database.faculties.First(data => data.idfaculty == id);
             return f;
+        }
+
+        public List<faculty> getAllFaculties()
+        {
+            return database.faculties.ToList();
         }
 
         public void updateFaculty(string id, faculty f)
@@ -174,6 +199,16 @@ namespace TimetableServer
             return gr;
         }
 
+        public List<group> getAllGroups()
+        {
+            return database.groups.ToList();
+        }
+
+        public List<group> getSubgroups(string id)
+        {
+            return database.groups.First(data => data.idgroups == id).groups1.ToList();
+        }
+
         public void updateGroup(string id, group gr)
         {
             group dbgr = database.groups.First(data => data.idgroups == id);
@@ -201,7 +236,12 @@ namespace TimetableServer
             lesson l = database.lessons.First(data => data.idlessons == id);
             return l;
         }
-       
+
+        public List<lesson> getAllLessons()
+        {
+            return database.lessons.ToList();
+        }
+
         public void updateLesson(string id, lesson l)
         {
             lesson dbl = database.lessons.First(data => data.idlessons == id);
@@ -228,6 +268,11 @@ namespace TimetableServer
         {
             semester sem = database.semesters.First(data => data.idsemesters == id);
             return sem;
+        }
+
+        public List<semester> getAllSemesters()
+        {
+            return database.semesters.ToList();
         }
 
         public void updateSemester(string id, semester sem)
@@ -322,6 +367,11 @@ namespace TimetableServer
         {
             teaching tch = database.teachings.First(data => data.idmain == id);
             return tch;
+        }
+
+        public List<teaching> getAllTeaching()
+        {
+            return database.teachings.ToList();
         }
 
         public void updateTeaching(string id, teaching tch)
