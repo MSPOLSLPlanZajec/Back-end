@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace TimetableServer
 {
@@ -10,6 +11,10 @@ namespace TimetableServer
     {
         public static void Register(HttpConfiguration config)
         {
+            //Enable CORS for front-end
+            var corsData = new EnableCorsAttribute("157.158.16.186:3000,localhost:8080", "*", "*");
+            config.EnableCors(corsData);
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -26,7 +31,8 @@ namespace TimetableServer
                 defaults: new {}
             );
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
         }
     }
 }
