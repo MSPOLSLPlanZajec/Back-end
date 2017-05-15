@@ -7,9 +7,11 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TimetableServer.Models;
+using System.Web.Http.Cors;
 
 namespace TimetableServer.Controlers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommandController : ApiController
     {
         private DataBase db = new DataBase();

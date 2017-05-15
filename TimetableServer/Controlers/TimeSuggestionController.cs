@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using TimetableServer.Models;
 
 namespace TimetableServer.Controlers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [Route("time-suggestion/{id}")]
     public class TimeSuggestionController : ApiController
     {
