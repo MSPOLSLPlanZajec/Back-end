@@ -54,7 +54,7 @@ namespace TimetableServer.Controlers
             teacher.name = teacherObj.name;
             teacher.surname = teacherObj.surname;
             teacher.idtitles = teacherObj.title;
-            teacher.idteachers = Guid.NewGuid().ToString().Substring(0, 32);
+            teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
             db.insertTeacher(ref teacher);
             teacherObj.id = teacher.idteachers;
             return JObject.Parse(JsonConvert.SerializeObject(teacherObj));
@@ -66,7 +66,7 @@ namespace TimetableServer.Controlers
             classroom classroom = new classroom();
             classroom.number = classroomObj.name;
             //TODO ewentualnie zwiększyć maksymalną długość w bazie
-            classroom.idclassrooms = Guid.NewGuid().ToString().Substring(0, 32);
+            classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
             db.insertClassRoom(ref classroom);
             classroomObj.id = classroom.idclassrooms;
             return JObject.Parse(JsonConvert.SerializeObject(classroomObj));
@@ -77,13 +77,13 @@ namespace TimetableServer.Controlers
             var studyPlanObj = JsonConvert.DeserializeObject<StudyPlan>(value.data.ToString());
             faculty major = new faculty();
             major.name = studyPlanObj.major;
-            major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32);
+            major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32).Replace("-", "");
             studyPlanObj.id = major.idfaculty;
             db.insertFaculty(ref major);
             foreach (SubGroup it in studyPlanObj.semesters)
             {
                 semester semester = new semester();
-                semester.idsemesters = Guid.NewGuid().ToString().Substring(0, 32);
+                semester.idsemesters = Guid.NewGuid().ToString().Replace("-", "");
                 semester.name = it.name;
                 db.insertSemester(ref semester);
                 addGroup(it, semester.idsemesters, null, major.idfaculty);
@@ -96,7 +96,7 @@ namespace TimetableServer.Controlers
         private void addGroup(SubGroup subgroup, string semesterID, string superGroupID, string majorID)
         {
             group group = new group();
-            group.idgroups = Guid.NewGuid().ToString().Substring(0, 32);
+            group.idgroups = Guid.NewGuid().ToString().Replace("-", "");
             subgroup.id = group.idgroups;
             group.name = subgroup.name;
             group.idsemesters = semesterID;
@@ -117,7 +117,7 @@ namespace TimetableServer.Controlers
         private void addSubject(Lesson it, string groupID)
         {
             lesson lesson = new lesson();
-            lesson.idlessons = Guid.NewGuid().ToString().Substring(0, 32);
+            lesson.idlessons = Guid.NewGuid().ToString().Replace("-", "");
             lesson.idteachers = it.teacher_id;
             lesson.idsubjects = findSubjectID(it.name, it.type, it.duration);
             lesson.idgroups = groupID;
@@ -134,7 +134,7 @@ namespace TimetableServer.Controlers
                     return it.idsubjects;
             }
             subject subject = new subject();
-            subject.idsubjects = Guid.NewGuid().ToString().Substring(0, 32);
+            subject.idsubjects = Guid.NewGuid().ToString().Replace("-", "");
             subject.name = name;
             subject.time = duration.ToString();
             subject.type = type;
