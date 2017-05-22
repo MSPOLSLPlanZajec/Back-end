@@ -18,8 +18,8 @@ namespace TimetableServer.Controlers
         {
             return new List<List<TimeSuggestion>>()
             {
-                new List<TimeSuggestion>() { new TimeSuggestion() {startsAt=1 },new TimeSuggestion() {startsAt=5 } },
-                new List<TimeSuggestion>() { new TimeSuggestion() {startsAt=5 }},
+                new List<TimeSuggestion>() { new TimeSuggestion() {StartsAt=1 },new TimeSuggestion() {StartsAt=5 } },
+                new List<TimeSuggestion>() { new TimeSuggestion() {StartsAt=5 }},
                 new List<TimeSuggestion>() 
             };
         }

@@ -6,42 +6,29 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using TimetableServer.Models;
+using TimetableServer;
 
 namespace TimetableServer.Controlers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class GroupsController : ApiController
     {
-        private DataBase db = new DataBase();
+        private DataBase _db;
 
         public IEnumerable<Group> GetAllGroups()
         {
-            db = db ?? new DataBase();
+            _db = _db ?? new DataBase();
             return
-                populateSubGroups(convertDBGroupsToGroups(db.getGroupsWithParentGroupId(null)));
+                PopulateSubGroups(Converter.ConvertDbGroupsToGroups(_db.getGroupsWithParentGroupId(null)));
         }
 
-        private List<Group> convertDBGroupsToGroups(List<@group> dbGroups)
-        {
-            List<Group> Groups = new List<Group>();
-            foreach (var dbGroup in dbGroups)
-            {
-                var gr = new Group();
-                gr.name = dbGroup.name;
-                gr.id = dbGroup.idgroups;
-                gr.groups = new List<Group>();
-                Groups.Add(gr);
-            }
-            return Groups;
-        }
-
-        private List<Group> populateSubGroups(List<Group> baseGroup)
+        private List<Group> PopulateSubGroups(List<Group> baseGroup)
         {
             if (baseGroup.Count == 0)
                 return baseGroup;
             foreach (var group in baseGroup)
             {
-                group.groups = populateSubGroups(convertDBGroupsToGroups(db.getGroupsWithParentGroupId(group.id)));
+                group.Groups = PopulateSubGroups(Converter.ConvertDbGroupsToGroups(_db.getGroupsWithParentGroupId(group.Id)));
             }
             return baseGroup;
         }

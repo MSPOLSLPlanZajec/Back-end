@@ -7,9 +7,9 @@ namespace TimetableServer.Models
 {
     public class StudyPlan
     {
-        public string id { get; set; }
-        public string major { get; set; }
-        public List<SubGroup> semesters { get; set; }
+        public string Id { get; set; }
+        public string Major { get; set; }
+        public List<SubGroup> Semesters { get; set; }
         
     }
 }

@@ -7,7 +7,7 @@ namespace TimetableServer.Models
 {
     public class Classroom
     {
-        public string name { get; set; }
-        public string id { get; set; }
+        public string Name { get; set; }
+        public string Id { get; set; }
     }
 }

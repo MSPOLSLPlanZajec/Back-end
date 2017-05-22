@@ -20,7 +20,7 @@ namespace TimetableServer
         public string idclassrooms { get; set; }
         public string iddays { get; set; }
         public string idgroups { get; set; }
-        public int start { get; set; }
+        public int? start { get; set; }
     
         public virtual classroom classroom { get; set; }
         public virtual day day { get; set; }

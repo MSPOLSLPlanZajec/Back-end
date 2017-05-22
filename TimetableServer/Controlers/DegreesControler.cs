@@ -12,13 +12,13 @@ namespace TimetableServer.Controlers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DegreeController : ApiController
     {
-        private DataBase db = new DataBase();
+        private DataBase _db;
+
         public IEnumerable<Degree> GetAllDegrees()
         {
-            db = db ?? new DataBase();
-            var titles = db.getTitles();
-            return titles.Select(a => new Degree() { id = a.idtitles, title = a.name }).ToList();
-
+            _db = _db ?? new DataBase();
+            var titles = _db.getTitles();
+            return titles.Select(Converter.ConvertToDegree).ToList();
         }
     }
 }

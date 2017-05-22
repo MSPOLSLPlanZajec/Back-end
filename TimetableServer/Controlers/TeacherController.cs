@@ -12,29 +12,13 @@ namespace TimetableServer.Controlers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TeacherController : ApiController
     {
-        private DataBase db = new DataBase();
+        private DataBase _db;
 
         // GET: api/Teacher
         public IEnumerable<Teacher> GetAllTeachers()
         {
-            db = db ?? new DataBase();
-            return
-                convertDBTeachersToTeachers(db.GetAllTeachers());
-        }
-
-        private List<Teacher> convertDBTeachersToTeachers(List<teacher> dbTeachers)
-        {
-            List<Teacher> Teachers = new List<Teacher>();
-            foreach (var dbteacher in dbTeachers)
-            {
-                var t = new Teacher();
-                t.name = dbteacher.name;
-                t.id = dbteacher.idteachers;
-                t.surname = dbteacher.surname;
-                t.title = db.getTitle(dbteacher.idtitles).name;
-                Teachers.Add(t);
-            }
-            return Teachers;
+            _db = _db ?? new DataBase();
+            return _db.GetAllTeachers().Select(Converter.ConvertDbTeacherToTeacher);
         }
     }
 }

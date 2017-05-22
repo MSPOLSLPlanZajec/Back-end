@@ -7,8 +7,8 @@ namespace TimetableServer.Models
 {
     public class LessonTimeAndDateSetter
     {
-        public string id { get; set; }
-        public int day { get; set; }
-        public int startsAt { get; set; }
+        public string Id { get; set; }
+        public int Day { get; set; }
+        public int StartsAt { get; set; }
     }
 }

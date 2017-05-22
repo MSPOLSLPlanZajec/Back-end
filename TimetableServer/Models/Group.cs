@@ -7,8 +7,8 @@ namespace TimetableServer.Models
 {
     public class Group
     {
-        public string name { get; set; }
-        public string id { get; set; }
-        public List<Group> groups { get; set; } 
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public List<Group> Groups { get; set; } 
     }
 }
