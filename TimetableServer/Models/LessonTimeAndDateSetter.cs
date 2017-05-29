@@ -10,5 +10,6 @@ namespace TimetableServer.Models
         public string Id { get; set; }
         public int Day { get; set; }
         public int StartsAt { get; set; }
+        public string ClassroomId { get; set; }
     }
 }
