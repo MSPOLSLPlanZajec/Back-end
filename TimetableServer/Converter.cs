@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -53,6 +53,24 @@ namespace TimetableServer
             {
                 Name = day.Key, Scheduled = ConvertToLesson(day.AsQueryable().ToList())
             }).ToList();
+        }
+
+        public static teacher ConvertTeacherToDbTeacher(Teacher teacherObj)
+        {
+            teacher teacher = new teacher();
+            teacher.name = teacherObj.Name;
+            teacher.surname = teacherObj.Surname;
+            teacher.idtitles = teacherObj.Title;
+            teacher.idteachers = teacherObj.Id;
+            return teacher;
+        }
+
+        public static classroom ConvertClassRooomToDbClassRoom(Classroom classroomObj)
+        {
+
+            classroom classroom = new classroom();
+            classroom.number = classroomObj.Name;
+            return classroom;
         }
 
         public static Degree ConvertToDegree(title titleToConvert)

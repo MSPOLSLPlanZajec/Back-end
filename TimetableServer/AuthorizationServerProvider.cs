@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TimetableServer
 {
-    public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
+    public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {

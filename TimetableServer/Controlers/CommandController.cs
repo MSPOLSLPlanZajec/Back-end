@@ -17,7 +17,7 @@ namespace TimetableServer.Controlers
         private DataBase db = new DataBase();
 
         // POST: Command
-        [Authorize]
+        //[Authorize]
         public JObject Post([FromBody] Command value)
         {
             db = db ?? new DataBase();
@@ -51,10 +51,7 @@ namespace TimetableServer.Controlers
         private JObject addTeacher(Command value)
         {
             var teacherObj = JsonConvert.DeserializeObject<Teacher>(value.Data.ToString());
-            teacher teacher = new teacher();
-            teacher.name = teacherObj.Name;
-            teacher.surname = teacherObj.Surname;
-            teacher.idtitles = teacherObj.Title;
+            teacher teacher = Converter.ConvertTeacherToDbTeacher(teacherObj);
             teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
             db.insertTeacher(ref teacher);
             teacherObj.Id = teacher.idteachers;
@@ -64,9 +61,9 @@ namespace TimetableServer.Controlers
         private JObject addClassroom(Command value)
         {
             var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.Data.ToString());
-            classroom classroom = new classroom();
-            classroom.number = classroomObj.Name;
-            //TODO ewentualnie zwiększyć maksymalną długość w bazie
+            classroom classroom = Converter.ConvertClassRooomToDbClassRoom(classroomObj);
+            
+          
             classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
             db.insertClassRoom(ref classroom);
             classroomObj.Id = classroom.idclassrooms;
