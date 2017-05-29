@@ -25,6 +25,7 @@ namespace TimetableServer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<account> accounts { get; set; }
         public virtual DbSet<classroom> classrooms { get; set; }
         public virtual DbSet<croomtype> croomtypes { get; set; }
         public virtual DbSet<day> days { get; set; }

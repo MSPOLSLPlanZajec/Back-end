@@ -42,8 +42,8 @@ namespace TimetableServer
                         Name = t.group.name
                     },
                     Type = t.subject.type,
-                    Duration = int.Parse(t.subject.time),
-                    StartsAt = t.start.GetValueOrDefault()
+                    Duration = t.subject.time,
+                    StartsAt = t.start
                 }).ToList();
         }
 

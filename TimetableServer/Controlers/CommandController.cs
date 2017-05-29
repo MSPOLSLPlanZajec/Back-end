@@ -123,17 +123,17 @@ namespace TimetableServer.Controlers
 
         }
 
-        private string findSubjectID(string name, string type, int duration)
+        private string findSubjectID(string name, string type, int? duration)
         {
             foreach (var it in db.getAllSubjects())
             {
-                if (it.name == name && it.time == duration.ToString() && it.type == type)
+                if (it.name == name && it.time == duration && it.type == type)
                     return it.idsubjects;
             }
             subject subject = new subject();
             subject.idsubjects = Guid.NewGuid().ToString().Replace("-", "");
             subject.name = name;
-            subject.time = duration.ToString();
+            subject.time = duration;
             subject.type = type;
             db.insertSubject(ref subject);
             return subject.idsubjects;
