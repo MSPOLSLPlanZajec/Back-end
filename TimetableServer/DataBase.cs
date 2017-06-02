@@ -9,7 +9,7 @@ namespace TimetableServer
     {
         private TimeTableEntities database;
 
-       public DataBase()
+        public DataBase()
         {
             database = new TimeTableEntities();
         }
@@ -305,7 +305,7 @@ namespace TimetableServer
         public List<subject> getAllSubjects()
         {
             return database.subjects.ToList<subject>();
-         
+
         }
 
         public void updateSubject(string id, subject sub)
@@ -339,7 +339,7 @@ namespace TimetableServer
         public List<teacher> GetAllTeachers()
         {
             return database.teachers.ToList();
-        } 
+        }
 
         public void updateTeacher(string id, teacher tchr)
         {
@@ -421,9 +421,16 @@ namespace TimetableServer
         }
         #endregion
 
+        #region
+        public bool existsAccount(string username, string encryptedPassword)
+        {
+            int number = database.accounts.Where(data => data.username == username && data.encryptedpass == encryptedPassword).Count();
+            return number != 0;
+        }
+        #endregion
         ~DataBase()
         {
-            
+
         }
     }
 }
