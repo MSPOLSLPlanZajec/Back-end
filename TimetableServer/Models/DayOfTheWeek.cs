@@ -7,7 +7,7 @@ namespace TimetableServer.Models
 {
     public class DayOfTheWeek
     {
-        public string Name { get; set; }
-        public List<Lesson> Scheduled { get; set; } 
+        public string name { get; set; }
+        public List<Lesson> scheduled { get; set; } 
     }
 }

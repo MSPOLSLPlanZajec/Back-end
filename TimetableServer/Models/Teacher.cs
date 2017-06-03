@@ -7,9 +7,9 @@ namespace TimetableServer.Models
 {
     public class Teacher
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Title { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string title { get; set; }
     }
 }

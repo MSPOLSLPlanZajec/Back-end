@@ -206,6 +206,7 @@
     <Compile Include="Controlers\ScheduleController.cs" />
     <Compile Include="Controlers\TeacherController.cs" />
     <Compile Include="Controlers\TimeSuggestionController.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="croomtype.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -277,7 +278,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

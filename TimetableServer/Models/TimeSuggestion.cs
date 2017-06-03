@@ -7,6 +7,8 @@ namespace TimetableServer.Models
 {
     public class TimeSuggestion
     {
-        public int StartsAt { get; set; }
+        public int startsAt { get; set; }
+        public int duration { get; set; }
+        public List<Classroom> possibleClassrooms { get; set; }
     }
 }
