@@ -48,7 +48,7 @@ namespace TimetableServer.Controlers
                         var cr = (classroom) classroom.First;
                         var crTimeSlots = (List<List<TimeSlot>>) classroom.Second;
                         var free = true;
-                        for (var start = 0; start < int.Parse(lesson.subject.time); ++start)
+                        for (var start = 0; start < lesson.subject.time.GetValueOrDefault(); ++start)
                         {
                             if (crTimeSlots.ElementAt(day).ElementAt(suggestion.startsAt + start).Availability ==
                                 Availability.NonAvailable)
@@ -65,7 +65,7 @@ namespace TimetableServer.Controlers
         private List<List<TimeSuggestion>> getPossibleTimeSlots(List<List<TimeSlot>> combinedTimeSlots, lesson lesson)
         {
             var timeSuggestions = new List<List<TimeSuggestion>>();
-            var duration = int.Parse(lesson.subject.time);
+            var duration = lesson.subject.time.GetValueOrDefault();
             foreach (var day in combinedTimeSlots)
             {
                 var timeSuggestionForADay = new List<TimeSuggestion>();
@@ -99,9 +99,9 @@ namespace TimetableServer.Controlers
             {
                 foreach (var scheduledLessonInDay in teacherScheduledLessons.Where(l => l.day == day))
                 {
-                    for (int startBlockAndDuration = scheduledLessonInDay.start.Value;
+                    for (int startBlockAndDuration = scheduledLessonInDay.start.GetValueOrDefault();
                         startBlockAndDuration <
-                        (scheduledLessonInDay.start.Value + int.Parse(scheduledLessonInDay.subject.time));
+                        (scheduledLessonInDay.start.Value + scheduledLessonInDay.subject.time.GetValueOrDefault());
                         ++startBlockAndDuration)
                     {
                         availableTimeSlots[dayIndex].First(b => b.BlockName == startBlockAndDuration).Availability = Availability.NonAvailable;
@@ -123,9 +123,9 @@ namespace TimetableServer.Controlers
             {
                 foreach (var scheduledLessonInDay in groupScheduledLessons.Where(l => l.day == day))
                 {
-                    for (int startBlockAndDuration = scheduledLessonInDay.start.Value;
+                    for (int startBlockAndDuration = scheduledLessonInDay.start.GetValueOrDefault();
                         startBlockAndDuration <
-                        (scheduledLessonInDay.start.Value + int.Parse(scheduledLessonInDay.subject.time));
+                        (scheduledLessonInDay.start.Value + scheduledLessonInDay.subject.time.GetValueOrDefault());
                         ++startBlockAndDuration)
                     {
                         availableTimeSlots[dayIndex].First(b => b.BlockName == startBlockAndDuration).Availability = Availability.NonAvailable;
@@ -145,7 +145,7 @@ namespace TimetableServer.Controlers
             {
                 foreach (var lesson in dayOfLessons)
                 {
-                    var duration = int.Parse(lesson.subject.time);
+                    var duration = lesson.subject.time.GetValueOrDefault();
                     for (int slot = 0; slot < duration; ++slot)
                     {
                         timeSlots.ElementAt(dayIndex).ElementAt(lesson.start.Value + slot).Availability =

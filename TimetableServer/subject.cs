@@ -23,7 +23,7 @@ namespace TimetableServer
     
         public string idsubjects { get; set; }
         public string name { get; set; }
-        public string time { get; set; }
+        public Nullable<int> time { get; set; }
         public string type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -24,7 +24,7 @@ namespace TimetableServer
             config.Routes.MapHttpRoute(
                 name: "TimeSuggestion",
                 routeTemplate: "{controller}/{id}",
-                defaults: new { });
+                defaults: new {  });
             config.Routes.MapHttpRoute(
                 name: "GroupsList",
                 routeTemplate: "{controller}",
@@ -33,6 +33,7 @@ namespace TimetableServer
 
             //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.Formatters.Add(new BrowserJsonFormatter());
+           
         }
     }
 }

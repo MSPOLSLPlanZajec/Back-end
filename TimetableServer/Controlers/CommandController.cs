@@ -14,12 +14,13 @@ namespace TimetableServer.Controlers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CommandController : ApiController
     {
-        private DataBase db = new DataBase();
+        private DataBase _db = new DataBase();
 
         // POST: Command
+        //[Authorize]
         public JObject Post([FromBody] Command value)
         {
-            db = db ?? new DataBase();
+            _db = _db ?? new DataBase();
             switch (value.type)
             {
                 case "add_study_plan":
@@ -38,12 +39,12 @@ namespace TimetableServer.Controlers
         private JObject selectStart(Command value)
         {
             var lessonTDS = JsonConvert.DeserializeObject<LessonTimeAndDateSetter>(value.data.ToString());
-            lesson lesson = db.getLesson(lessonTDS.id);
+            lesson lesson = _db.getLesson(lessonTDS.id);
             lesson.iddays = lessonTDS.day.ToString();
 
             //brakuje w bazie (lub ja nie umiem znaleźć)
             //lesson.startsAt = lessonTDS.startsAt;
-            db.updateLesson(lessonTDS.id, lesson);
+            _db.updateLesson(lessonTDS.id, lesson);
             return JObject.Parse(JsonConvert.SerializeObject(lessonTDS));
         }
 
@@ -55,7 +56,7 @@ namespace TimetableServer.Controlers
             teacher.surname = teacherObj.surname;
             teacher.idtitles = teacherObj.title;
             teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
-            db.insertTeacher(ref teacher);
+            _db.insertTeacher(ref teacher);
             teacherObj.id = teacher.idteachers;
             return JObject.Parse(JsonConvert.SerializeObject(teacherObj));
         }
@@ -67,7 +68,7 @@ namespace TimetableServer.Controlers
             classroom.number = classroomObj.name;
             //TODO ewentualnie zwiększyć maksymalną długość w bazie
             classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
-            db.insertClassRoom(ref classroom);
+            _db.insertClassRoom(ref classroom);
             classroomObj.id = classroom.idclassrooms;
             return JObject.Parse(JsonConvert.SerializeObject(classroomObj));
         }
@@ -79,13 +80,13 @@ namespace TimetableServer.Controlers
             major.name = studyPlanObj.major;
             major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32).Replace("-", "");
             studyPlanObj.id = major.idfaculty;
-            db.insertFaculty(ref major);
+            _db.insertFaculty(ref major);
             foreach (SubGroup it in studyPlanObj.semesters)
             {
                 semester semester = new semester();
                 semester.idsemesters = Guid.NewGuid().ToString().Replace("-", "");
                 semester.name = it.name;
-                db.insertSemester(ref semester);
+                _db.insertSemester(ref semester);
                 addGroup(it, semester.idsemesters, null, major.idfaculty);
 
             }
@@ -102,7 +103,7 @@ namespace TimetableServer.Controlers
             group.idsemesters = semesterID;
             group.idsupergroup = superGroupID;
             group.idfaculty = majorID;
-            db.insertGroup(ref group);
+            _db.insertGroup(ref group);
             foreach (SubGroup it in subgroup.subgroups)
             {
                 addGroup(it, semesterID, group.idgroups, majorID);
@@ -122,23 +123,23 @@ namespace TimetableServer.Controlers
             lesson.idsubjects = findSubjectID(it.name, it.type, it.duration);
             lesson.idgroups = groupID;
             lesson.idclassrooms = "a";
-            db.insertLesson(ref lesson);
+            _db.insertLesson(ref lesson);
 
         }
 
-        private string findSubjectID(string name, string type, int duration)
+        private string findSubjectID(string name, string type, int? duration)
         {
-            foreach (var it in db.getAllSubjects())
+            foreach (var it in _db.getAllSubjects())
             {
-                if (it.name == name && it.time == duration.ToString() && it.type == type)
+                if (it.name == name && it.time == duration && it.type == type)
                     return it.idsubjects;
             }
             subject subject = new subject();
             subject.idsubjects = Guid.NewGuid().ToString().Replace("-", "");
             subject.name = name;
-            subject.time = duration.ToString();
+            subject.time = duration;
             subject.type = type;
-            db.insertSubject(ref subject);
+            _db.insertSubject(ref subject);
             return subject.idsubjects;
         }
     }
