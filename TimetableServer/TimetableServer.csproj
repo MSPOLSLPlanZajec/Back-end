@@ -230,6 +230,7 @@
     <Compile Include="classroom.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controlers\ClassroomController.cs" />
     <Compile Include="Controlers\CommandController.cs" />
     <Compile Include="Controlers\DegreesControler.cs" />
     <Compile Include="Controlers\GroupsController.cs" />

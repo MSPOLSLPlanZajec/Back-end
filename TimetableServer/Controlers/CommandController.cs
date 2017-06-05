@@ -17,7 +17,7 @@ namespace TimetableServer.Controlers
         private DataBase _db = new DataBase();
 
         // POST: Command
-        //[Authorize]
+        [Authorize]
         public JObject Post([FromBody] Command value)
         {
             _db = _db ?? new DataBase();
