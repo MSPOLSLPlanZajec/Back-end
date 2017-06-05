@@ -12,7 +12,7 @@ namespace TimetableServer
         {
             return dbGroups.Select(dbGroup => new Group
             {
-                Name = dbGroup.name, Id = dbGroup.idgroups, Groups = new List<Group>()
+                name = dbGroup.name, id = dbGroup.idgroups, groups = new List<Group>()
             }).ToList();
         }
 
@@ -21,29 +21,29 @@ namespace TimetableServer
             return lessons.Select(
                 t => new Lesson
                 {
-                    Name = t.subject.name,
-                    Teacher = new Teacher
+                    name = t.subject.name,
+                    teacher = new Teacher
                     {
-                        Id = t.teacher.idteachers,
-                        Name = t.teacher.name,
-                        Surname = t.teacher.surname,
-                        Title = t.teacher.title.name
+                        id = t.teacher.idteachers,
+                        name = t.teacher.name,
+                        surname = t.teacher.surname,
+                        title = t.teacher.title.name
                     },
-                    TeacherId = t.teacher.idteachers,
-                    Classroom = new Classroom
+                    teacherId = t.teacher.idteachers,
+                    classroom = new Classroom
                     {
-                        Id = t.classroom.idclassrooms,
-                        Name = t.classroom.number
+                        id = t.classroom.idclassrooms,
+                        name = t.classroom.number
                     },
-                    Group = new Group
+                    group = new Group
                     {
-                        Groups = new List<Group>(),
-                        Id = t.group.idgroups,
-                        Name = t.group.name
+                        groups = new List<Group>(),
+                        id = t.group.idgroups,
+                        name = t.group.name
                     },
-                    Type = t.subject.type,
-                    Duration = t.subject.time,
-                    StartsAt = t.start
+                    type = t.subject.type,
+                    duration = t.subject.time.GetValueOrDefault(),
+                    startsAt = t.start.GetValueOrDefault()
                 }).ToList();
         }
 
@@ -51,17 +51,17 @@ namespace TimetableServer
         {
             return groupedList.Select(day => new DayOfTheWeek
             {
-                Name = day.Key, Scheduled = ConvertToLesson(day.AsQueryable().ToList())
+                name = day.Key, scheduled = ConvertToLesson(day.AsQueryable().ToList())
             }).ToList();
         }
 
         public static teacher ConvertTeacherToDbTeacher(Teacher teacherObj)
         {
             teacher teacher = new teacher();
-            teacher.name = teacherObj.Name;
-            teacher.surname = teacherObj.Surname;
-            teacher.idtitles = teacherObj.Title;
-            teacher.idteachers = teacherObj.Id;
+            teacher.name = teacherObj.name;
+            teacher.surname = teacherObj.surname;
+            teacher.idtitles = teacherObj.title;
+            teacher.idteachers = teacherObj.id;
             return teacher;
         }
 
@@ -69,23 +69,32 @@ namespace TimetableServer
         {
 
             classroom classroom = new classroom();
-            classroom.number = classroomObj.Name;
+            classroom.number = classroomObj.name;
             return classroom;
         }
 
         public static Degree ConvertToDegree(title titleToConvert)
         {
-            return new Degree() {Id = titleToConvert.idtitles, Title = titleToConvert.name};
+            return new Degree() {id = titleToConvert.idtitles, title = titleToConvert.name};
         }
 
         public static Teacher ConvertDbTeacherToTeacher(teacher t)
         {
             return new Teacher
             {
-                Name = t.name,
-                Id = t.idteachers,
-                Surname = t.surname,
-                Title = t.title.name
+                name = t.name,
+                id = t.idteachers,
+                surname = t.surname,
+                title = t.title.name
+            };
+        }
+
+        public static Classroom ConvertDbClassroomToClassroom(classroom cr)
+        {
+            return new Classroom
+            {
+                id = cr.idclassrooms,
+                name = cr.number
             };
         }
     }

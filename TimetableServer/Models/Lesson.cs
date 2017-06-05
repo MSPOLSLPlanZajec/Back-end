@@ -7,13 +7,13 @@ namespace TimetableServer.Models
 {
     public class Lesson
     {
-        public string Name { get; set; }
-        public Teacher Teacher { get; set; }
-        public string TeacherId { get; set; }
-        public Classroom Classroom { get; set; }
-        public Group Group { get; set; }
-        public string Type { get; set; }
-        public int? Duration { get; set; }
-        public int StartsAt { get; set; }
+        public string name { get; set; }
+        public Teacher teacher { get; set; }
+        public string teacherId { get; set; }
+        public Classroom classroom { get; set; }
+        public Group group { get; set; }
+        public string type { get; set; }
+        public int duration { get; set; }
+        public int startsAt { get; set; }
     }
 }

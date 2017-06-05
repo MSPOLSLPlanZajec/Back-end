@@ -28,7 +28,7 @@ namespace TimetableServer.Controlers
                 return baseGroup;
             foreach (var group in baseGroup)
             {
-                group.Groups = PopulateSubGroups(Converter.ConvertDbGroupsToGroups(_db.getGroupsWithParentGroupId(group.Id)));
+                group.groups = PopulateSubGroups(Converter.ConvertDbGroupsToGroups(_db.getGroupsWithParentGroupId(group.id)));
             }
             return baseGroup;
         }

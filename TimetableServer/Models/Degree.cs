@@ -7,7 +7,7 @@ namespace TimetableServer.Models
 {
     public class Degree
     {
-        public string Id { get; set; }
-        public string Title { get; set; }
+        public string id { get; set; }
+        public string title { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace TimetableServer.Models
 {
     public class Command
     {
-        public string Type { get; set; }
-        public JObject Data { get; set; }
+        public string type { get; set; }
+        public JObject data { get; set; }
     }
 }

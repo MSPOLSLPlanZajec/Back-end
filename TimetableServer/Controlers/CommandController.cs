@@ -17,11 +17,11 @@ namespace TimetableServer.Controlers
         private DataBase _db = new DataBase();
 
         // POST: Command
-        //[Authorize]
+        [Authorize]
         public JObject Post([FromBody] Command value)
         {
             _db = _db ?? new DataBase();
-            switch (value.Type)
+            switch (value.type)
             {
                 case "add_study_plan":
                     return addStudyPlan(value);
@@ -38,50 +38,54 @@ namespace TimetableServer.Controlers
 
         private JObject selectStart(Command value)
         {
-            var lessonTDS = JsonConvert.DeserializeObject<LessonTimeAndDateSetter>(value.Data.ToString());
-            lesson lesson = _db.getLesson(lessonTDS.Id);
-            lesson.iddays = lessonTDS.Day.ToString();
-            lesson.start = lessonTDS.StartsAt;
-            lesson.idclassrooms= lessonTDS.ClassroomId;
-            _db.updateLesson(lessonTDS.Id, lesson);
+            var lessonTDS = JsonConvert.DeserializeObject<LessonTimeAndDateSetter>(value.data.ToString());
+            lesson lesson = _db.getLesson(lessonTDS.id);
+            lesson.iddays = lessonTDS.day.ToString();
+
+            //brakuje w bazie (lub ja nie umiem znaleźć)
+            //lesson.startsAt = lessonTDS.startsAt;
+            _db.updateLesson(lessonTDS.id, lesson);
             return JObject.Parse(JsonConvert.SerializeObject(lessonTDS));
         }
 
         private JObject addTeacher(Command value)
         {
-            var teacherObj = JsonConvert.DeserializeObject<Teacher>(value.Data.ToString());
-            teacher teacher = Converter.ConvertTeacherToDbTeacher(teacherObj);
+            var teacherObj = JsonConvert.DeserializeObject<Teacher>(value.data.ToString());
+            teacher teacher = new teacher();
+            teacher.name = teacherObj.name;
+            teacher.surname = teacherObj.surname;
+            teacher.idtitles = teacherObj.title;
             teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
             _db.insertTeacher(ref teacher);
-            teacherObj.Id = teacher.idteachers;
+            teacherObj.id = teacher.idteachers;
             return JObject.Parse(JsonConvert.SerializeObject(teacherObj));
         }
 
         private JObject addClassroom(Command value)
         {
-            var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.Data.ToString());
-            classroom classroom = Converter.ConvertClassRooomToDbClassRoom(classroomObj);
-            
-          
+            var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.data.ToString());
+            classroom classroom = new classroom();
+            classroom.number = classroomObj.name;
+            //TODO ewentualnie zwiększyć maksymalną długość w bazie
             classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
             _db.insertClassRoom(ref classroom);
-            classroomObj.Id = classroom.idclassrooms;
+            classroomObj.id = classroom.idclassrooms;
             return JObject.Parse(JsonConvert.SerializeObject(classroomObj));
         }
 
         private JObject addStudyPlan(Command value)
         {
-            var studyPlanObj = JsonConvert.DeserializeObject<StudyPlan>(value.Data.ToString());
+            var studyPlanObj = JsonConvert.DeserializeObject<StudyPlan>(value.data.ToString());
             faculty major = new faculty();
-            major.name = studyPlanObj.Major;
+            major.name = studyPlanObj.major;
             major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32).Replace("-", "");
-            studyPlanObj.Id = major.idfaculty;
+            studyPlanObj.id = major.idfaculty;
             _db.insertFaculty(ref major);
-            foreach (SubGroup it in studyPlanObj.Semesters)
+            foreach (SubGroup it in studyPlanObj.semesters)
             {
                 semester semester = new semester();
                 semester.idsemesters = Guid.NewGuid().ToString().Replace("-", "");
-                semester.name = it.Name;
+                semester.name = it.name;
                 _db.insertSemester(ref semester);
                 addGroup(it, semester.idsemesters, null, major.idfaculty);
 
@@ -94,17 +98,17 @@ namespace TimetableServer.Controlers
         {
             group group = new group();
             group.idgroups = Guid.NewGuid().ToString().Replace("-", "");
-            subgroup.Id = group.idgroups;
-            group.name = subgroup.Name;
+            subgroup.id = group.idgroups;
+            group.name = subgroup.name;
             group.idsemesters = semesterID;
             group.idsupergroup = superGroupID;
             group.idfaculty = majorID;
             _db.insertGroup(ref group);
-            foreach (SubGroup it in subgroup.Subgroups)
+            foreach (SubGroup it in subgroup.subgroups)
             {
                 addGroup(it, semesterID, group.idgroups, majorID);
             }
-            foreach (Lesson it in subgroup.Subjects)
+            foreach (Lesson it in subgroup.subjects)
             {
                 addSubject(it, group.idgroups);
             }
@@ -115,8 +119,8 @@ namespace TimetableServer.Controlers
         {
             lesson lesson = new lesson();
             lesson.idlessons = Guid.NewGuid().ToString().Replace("-", "");
-            lesson.idteachers = it.TeacherId;
-            lesson.idsubjects = findSubjectID(it.Name, it.Type, it.Duration);
+            lesson.idteachers = it.teacherId;
+            lesson.idsubjects = findSubjectID(it.name, it.type, it.duration);
             lesson.idgroups = groupID;
             lesson.idclassrooms = "a";
             _db.insertLesson(ref lesson);
