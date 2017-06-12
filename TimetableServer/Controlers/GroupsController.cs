@@ -16,7 +16,9 @@ namespace TimetableServer.Controlers
         private DataBase _db;
 
         public IEnumerable<Group> GetAllGroups()
+
         {
+
             _db = _db ?? new DataBase();
             return
                 PopulateSubGroups(Converter.ConvertDbGroupsToGroups(_db.getGroupsWithParentGroupId(null)));

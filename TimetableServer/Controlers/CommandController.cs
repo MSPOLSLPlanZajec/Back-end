@@ -51,25 +51,50 @@ namespace TimetableServer.Controlers
         private JObject addTeacher(Command value)
         {
             var teacherObj = JsonConvert.DeserializeObject<Teacher>(value.data.ToString());
-            teacher teacher = new teacher();
-            teacher.name = teacherObj.name;
-            teacher.surname = teacherObj.surname;
-            teacher.idtitles = teacherObj.title;
-            teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
-            _db.insertTeacher(ref teacher);
-            teacherObj.id = teacher.idteachers;
+            teacher teacher;
+            if (teacherObj.id != null)
+            {
+                teacher = _db.getTeacher(teacherObj.id);
+                teacher.name = teacherObj.name;
+                teacher.surname = teacherObj.surname;
+                teacher.idtitles = teacherObj.title;
+                _db.updateTeacher(teacherObj.id,teacher);
+
+            }
+            else
+            {
+                teacher = new teacher();
+                teacher.name = teacherObj.name;
+                teacher.surname = teacherObj.surname;
+                teacher.idtitles = teacherObj.title;
+                teacher.idteachers = Guid.NewGuid().ToString().Replace("-", "");
+                _db.insertTeacher(ref teacher);
+                teacherObj.id = teacher.idteachers;
+            }
+           
             return JObject.Parse(JsonConvert.SerializeObject(teacherObj));
         }
 
         private JObject addClassroom(Command value)
         {
+
             var classroomObj = JsonConvert.DeserializeObject<Classroom>(value.data.ToString());
-            classroom classroom = new classroom();
-            classroom.number = classroomObj.name;
-            //TODO ewentualnie zwiększyć maksymalną długość w bazie
-            classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
-            _db.insertClassRoom(ref classroom);
-            classroomObj.id = classroom.idclassrooms;
+            classroom classroom;
+            if (classroomObj.id != null)
+            {
+                classroom = _db.getClassRoom(classroomObj.id);
+                classroom.number = classroomObj.name;
+                _db.updateClassRoom(classroomObj.id,classroom);
+            }
+            else
+            {
+                classroom = new classroom();
+                classroom.number = classroomObj.name;
+                //TODO ewentualnie zwiększyć maksymalną długość w bazie
+                classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
+                _db.insertClassRoom(ref classroom);
+                classroomObj.id = classroom.idclassrooms;
+            }
             return JObject.Parse(JsonConvert.SerializeObject(classroomObj));
         }
 
