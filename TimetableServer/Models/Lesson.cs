@@ -13,7 +13,7 @@ namespace TimetableServer.Models
         public Classroom classroom { get; set; }
         public Group group { get; set; }
         public string type { get; set; }
-        public int duration { get; set; }
-        public int startsAt { get; set; }
+        public int? duration { get; set; }
+        public int? startsAt { get; set; }
     }
 }

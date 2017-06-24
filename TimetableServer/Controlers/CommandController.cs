@@ -106,14 +106,26 @@ namespace TimetableServer.Controlers
             major.name = studyPlanObj.major;
             major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32).Replace("-", "");
             _db.insertFaculty(ref major);
-            studyPlanObj.id = major.idfaculty;
+            
+
+            group group = new group();
+            group.idgroups = Guid.NewGuid().ToString().Replace("-", "");
+            group.name = studyPlanObj.major;
+            group.idsemesters = null;
+            group.idsupergroup = null;
+            group.idfaculty = major.idfaculty;
+
+            studyPlanObj.id = group.idgroups;
+
+            _db.insertGroup(ref group);
+
             foreach (SubGroup it in studyPlanObj.semesters)
             {
                 semester semester = new semester();
                 semester.idsemesters = Guid.NewGuid().ToString().Replace("-", "");
                 semester.name = it.name;
                 _db.insertSemester(ref semester);
-                addGroup(it, semester.idsemesters, null, major.idfaculty);
+                addGroup(it, semester.idsemesters, group.idgroups, major.idfaculty);
             }
 
             return JObject.Parse(JsonConvert.SerializeObject(studyPlanObj));

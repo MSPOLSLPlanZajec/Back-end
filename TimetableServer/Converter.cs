@@ -18,6 +18,7 @@ namespace TimetableServer
 
         public static List<Lesson> ConvertToLesson(List<lesson> lessons)
         {
+            DataBase db = new DataBase();
             return lessons.Select(
                 t => new Lesson
                 {
@@ -30,10 +31,10 @@ namespace TimetableServer
                         title = t.teacher.title.name
                     },
                     teacher_id = t.teacher.idteachers,
-                    classroom = new Classroom
+                    classroom = t.classroom == null ? null : new Classroom
                     {
                         id = t.classroom.idclassrooms,
-                        name = t.classroom.number
+                        name = t.classroom.number 
                     },
                     group = new Group
                     {
@@ -41,7 +42,7 @@ namespace TimetableServer
                         id = t.group.idgroups,
                         name = t.group.name
                     },
-                    type = t.subject.type,
+                    type = db.getCRType(t.subject.type).name,
                     duration = t.subject.time.GetValueOrDefault(),
                     startsAt = t.start.GetValueOrDefault()
                 }).ToList();

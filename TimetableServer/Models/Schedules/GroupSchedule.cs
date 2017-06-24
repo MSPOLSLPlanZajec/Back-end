@@ -10,15 +10,27 @@ namespace TimetableServer.Models.Schedules
         public GroupSchedule(string id)
         {
             _db = _db ?? new DataBase();
-            PopulateSchedule(id);
+            var group = _db.getGroup(id);
+            name = $"{group.name}";
+            scheduled = Converter.ConvertToDaysOfTheWeek(group.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
+            
+            notScheduled = Converter.ConvertToLesson(group.lessons.Where(t => t.start == null).ToList());
+
+            appendLessonsFromHigherGroups(group.group1);
         }
 
-        public void PopulateSchedule(string id)
+        private void appendLessonsFromHigherGroups(group gr)
         {
-            var group = _db.getGroup(id);
-            Name = $"{group.name}";
-            Scheduled = Converter.ConvertToDaysOfTheWeek(group.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
-            NotScheduled = Converter.ConvertToLesson(group.lessons.Where(t => t.start == null).ToList());
+            if (gr != null)
+            {
+                var schGroupings =
+                    Converter.ConvertToDaysOfTheWeek(
+                        gr.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
+                for(var i = 0; i < scheduled.Count; i++)
+                    scheduled[i].scheduled.AddRange(schGroupings[i].scheduled);
+                notScheduled.AddRange(Converter.ConvertToLesson(gr.lessons.Where(t => t.start == null).ToList()));
+                appendLessonsFromHigherGroups(gr.group1);
+            }
         }
     }
 }
