@@ -29,7 +29,7 @@ namespace TimetableServer
                         surname = t.teacher.surname,
                         title = t.teacher.title.name
                     },
-                    teacherId = t.teacher.idteachers,
+                    teacher_id = t.teacher.idteachers,
                     classroom = new Classroom
                     {
                         id = t.classroom.idclassrooms,

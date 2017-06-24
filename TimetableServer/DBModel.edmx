@@ -68,10 +68,10 @@
           <Property Name="idlessons" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="idteachers" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="idsubjects" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="idclassrooms" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="iddays" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="idclassrooms" Type="varchar" MaxLength="32" Nullable="true" />
+          <Property Name="iddays" Type="varchar" MaxLength="32" Nullable="true" />
           <Property Name="idgroups" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="start" Type="int" Nullable="false" />
+          <Property Name="start" Type="int" Nullable="true" />
         </EntityType>
         <EntityType Name="semesters">
           <Key>
@@ -127,7 +127,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_day">
-          <End Role="days" Type="Self.days" Multiplicity="1" />
+          <End Role="days" Type="Self.days" Multiplicity="0..1" />
           <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="days">
@@ -175,7 +175,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_room">
-          <End Role="classrooms" Type="Self.classrooms" Multiplicity="1" />
+          <End Role="classrooms" Type="Self.classrooms" Multiplicity="0..1" />
           <End Role="lessons" Type="Self.lessons" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="classrooms">
@@ -434,10 +434,10 @@
           <Property Name="idlessons" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idteachers" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idsubjects" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="iddays" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idclassrooms" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="iddays" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="true" />
           <Property Name="idgroups" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="start" Type="Int32" Nullable="false" />
+          <Property Name="start" Type="Int32" Nullable="true" />
           <NavigationProperty Name="classroom" Relationship="Self.fk_room" FromRole="lessons" ToRole="classrooms" />
           <NavigationProperty Name="day" Relationship="Self.fk_day" FromRole="lessons" ToRole="days" />
           <NavigationProperty Name="group" Relationship="Self.fk_group" FromRole="lessons" ToRole="groups" />
@@ -520,7 +520,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_room">
-          <End Role="classrooms" Type="Self.classroom" Multiplicity="1" />
+          <End Role="classrooms" Type="Self.classroom" Multiplicity="0..1" />
           <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="classrooms">
@@ -544,7 +544,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_day">
-          <End Role="days" Type="Self.day" Multiplicity="1" />
+          <End Role="days" Type="Self.day" Multiplicity="0..1" />
           <End Role="lessons" Type="Self.lesson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="days">

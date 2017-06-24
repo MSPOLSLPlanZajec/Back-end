@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -101,11 +102,11 @@ namespace TimetableServer.Controlers
         private JObject addStudyPlan(Command value)
         {
             var studyPlanObj = JsonConvert.DeserializeObject<StudyPlan>(value.data.ToString());
-            faculty major = new faculty();
+            var major = new faculty();
             major.name = studyPlanObj.major;
             major.idfaculty = Guid.NewGuid().ToString().Substring(0, 32).Replace("-", "");
-            studyPlanObj.id = major.idfaculty;
             _db.insertFaculty(ref major);
+            studyPlanObj.id = major.idfaculty;
             foreach (SubGroup it in studyPlanObj.semesters)
             {
                 semester semester = new semester();
@@ -113,7 +114,6 @@ namespace TimetableServer.Controlers
                 semester.name = it.name;
                 _db.insertSemester(ref semester);
                 addGroup(it, semester.idsemesters, null, major.idfaculty);
-
             }
 
             return JObject.Parse(JsonConvert.SerializeObject(studyPlanObj));
@@ -123,12 +123,18 @@ namespace TimetableServer.Controlers
         {
             group group = new group();
             group.idgroups = Guid.NewGuid().ToString().Replace("-", "");
-            subgroup.id = group.idgroups;
             group.name = subgroup.name;
             group.idsemesters = semesterID;
             group.idsupergroup = superGroupID;
             group.idfaculty = majorID;
-            _db.insertGroup(ref group);
+            try
+            {
+                _db.insertGroup(ref group);
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
             foreach (SubGroup it in subgroup.subgroups)
             {
                 addGroup(it, semesterID, group.idgroups, majorID);
@@ -137,33 +143,39 @@ namespace TimetableServer.Controlers
             {
                 addSubject(it, group.idgroups);
             }
-
+            subgroup.id = group.idgroups;
         }
 
         private void addSubject(Lesson it, string groupID)
         {
             lesson lesson = new lesson();
             lesson.idlessons = Guid.NewGuid().ToString().Replace("-", "");
-            lesson.idteachers = it.teacherId;
+            lesson.idteachers = it.teacher_id;
             lesson.idsubjects = findSubjectID(it.name, it.type, it.duration);
             lesson.idgroups = groupID;
-            lesson.idclassrooms = "a";
-            _db.insertLesson(ref lesson);
-
+            try
+            {
+                _db.insertLesson(ref lesson);
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private string findSubjectID(string name, string type, int? duration)
         {
+            var idType = _db.getAllCRTypes().First(crt => crt.name == type).idcroomtype;
             foreach (var it in _db.getAllSubjects())
             {
-                if (it.name == name && it.time == duration && it.type == type)
+                if (it.name == name && it.time == duration && it.type == idType)
                     return it.idsubjects;
             }
             subject subject = new subject();
             subject.idsubjects = Guid.NewGuid().ToString().Replace("-", "");
             subject.name = name;
             subject.time = duration;
-            subject.type = type;
+            subject.type = idType;
             _db.insertSubject(ref subject);
             return subject.idsubjects;
         }
