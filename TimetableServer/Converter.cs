@@ -97,5 +97,14 @@ namespace TimetableServer
                 name = cr.number
             };
         }
+
+        public static LessonType ConvertClassroomTypeToLessonType(croomtype type)
+        {
+            return new LessonType
+            {
+                id = type.idcroomtype,
+                name = type.name
+            };
+        }
     }
 }
