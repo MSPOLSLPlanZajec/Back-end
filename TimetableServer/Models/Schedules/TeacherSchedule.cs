@@ -13,7 +13,7 @@ namespace TimetableServer.Models.Schedules
             _db = _db ?? new DataBase();
             var teacher = _db.getTeacher(id);
             name = $"{teacher.title} {teacher.name} {teacher.surname}";
-            scheduled = Converter.ConvertToDaysOfTheWeek(teacher.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
+            scheduled = Converter.ConvertToDaysOfTheWeek(teacher.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList(), _db.getAllDays().Select(x => x.name)).Select(x => x.scheduled).ToList();
             notScheduled = Converter.ConvertToLesson(teacher.lessons.Where(t => t.start == null).ToList());
         }
     }

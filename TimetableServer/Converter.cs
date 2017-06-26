@@ -23,6 +23,7 @@ namespace TimetableServer
                 t => new Lesson
                 {
                     name = t.subject.name,
+                    id  = t.idlessons,
                     teacher = new Teacher
                     {
                         id = t.teacher.idteachers,
@@ -48,12 +49,16 @@ namespace TimetableServer
                 }).ToList();
         }
 
-        public static List<DayOfTheWeek> ConvertToDaysOfTheWeek(List<IGrouping<string, lesson>> groupedList)
+        public static List<DayOfTheWeek> ConvertToDaysOfTheWeek(List<IGrouping<string, lesson>> groupedList, IEnumerable<string> days)
         {
-            return groupedList.Select(day => new DayOfTheWeek
-            {
-                name = day.Key, scheduled = ConvertToLesson(day.AsQueryable().ToList())
-            }).ToList();
+            
+            return (from it in days
+                let dayOfTheWeek = groupedList.Select(day => new DayOfTheWeek
+                {
+                    name = day.Key, scheduled = ConvertToLesson(day.AsQueryable().ToList())
+                }).Where(x => x.name == it)
+                select (DayOfTheWeek) (dayOfTheWeek.Any() ? dayOfTheWeek.First() : new DayOfTheWeek(it))).ToList();
+
         }
 
         public static teacher ConvertTeacherToDbTeacher(Teacher teacherObj)

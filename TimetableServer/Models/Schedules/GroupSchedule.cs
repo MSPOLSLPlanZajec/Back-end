@@ -12,7 +12,7 @@ namespace TimetableServer.Models.Schedules
             _db = _db ?? new DataBase();
             var group = _db.getGroup(id);
             name = $"{group.name}";
-            scheduled = Converter.ConvertToDaysOfTheWeek(group.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
+            scheduled = Converter.ConvertToDaysOfTheWeek(@group.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList(), _db.getAllDays().Select(x => x.name)).Select(x => x.scheduled).ToList();
             
             notScheduled = Converter.ConvertToLesson(group.lessons.Where(t => t.start == null).ToList());
 
@@ -25,9 +25,9 @@ namespace TimetableServer.Models.Schedules
             {
                 var schGroupings =
                     Converter.ConvertToDaysOfTheWeek(
-                        gr.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList());
+                        gr.lessons.Where(t => t.start != null).GroupBy(t => t.day.name).ToList(), _db.getAllDays().Select(x => x.name));
                 for(var i = 0; i < scheduled.Count; i++)
-                    scheduled[i].scheduled.AddRange(schGroupings[i].scheduled);
+                    scheduled[i].AddRange(schGroupings[i].scheduled);
                 notScheduled.AddRange(Converter.ConvertToLesson(gr.lessons.Where(t => t.start == null).ToList()));
                 appendLessonsFromHigherGroups(gr.group1);
             }
