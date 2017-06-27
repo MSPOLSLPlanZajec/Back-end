@@ -41,10 +41,10 @@ namespace TimetableServer.Controlers
         {
             var lessonTDS = JsonConvert.DeserializeObject<LessonTimeAndDateSetter>(value.data.ToString());
             lesson lesson = _db.getLesson(lessonTDS.id);
-            lesson.iddays = lessonTDS.day.ToString();
+            lesson.iddays = lessonTDS.day;
 
-            //brakuje w bazie (lub ja nie umiem znaleźć)
-            //lesson.startsAt = lessonTDS.startsAt;
+            lesson.start = lessonTDS.startsAt;
+            lesson.idclassrooms = lessonTDS.classroom;
             _db.updateLesson(lessonTDS.id, lesson);
             return JObject.Parse(JsonConvert.SerializeObject(lessonTDS));
         }
