@@ -100,7 +100,8 @@ namespace TimetableServer
             return new Classroom
             {
                 id = cr.idclassrooms,
-                name = cr.number
+                name = cr.number,
+                typeId = cr.idcroomtype
             };
         }
 

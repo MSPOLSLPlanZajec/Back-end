@@ -85,12 +85,15 @@ namespace TimetableServer.Controlers
             {
                 classroom = _db.getClassRoom(classroomObj.id);
                 classroom.number = classroomObj.name;
+                classroom.idcroomtype = classroomObj.typeId;
                 _db.updateClassRoom(classroomObj.id,classroom);
+                classroomObj.id = classroom.idclassrooms;
             }
             else
             {
                 classroom = new classroom();
                 classroom.number = classroomObj.name;
+                classroom.idcroomtype = classroomObj.typeId;
                 //TODO ewentualnie zwiększyć maksymalną długość w bazie
                 classroom.idclassrooms = Guid.NewGuid().ToString().Replace("-", "");
                 _db.insertClassRoom(ref classroom);

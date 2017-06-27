@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -32,16 +33,27 @@ namespace TimetableServer.Controlers
                 }
             }
             var possibleTimeSlots = getPossibleTimeSlots(combinedTimeSlots, lesson);
-            return GetTimeSlotsWithFreeClassooms(possibleTimeSlots, lesson);
+            try
+            {
+                var tmp = GetTimeSlotsWithFreeClassooms(possibleTimeSlots, lesson);
+                return tmp;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+            
         }
 
         private IEnumerable<List<TimeSuggestion>> GetTimeSlotsWithFreeClassooms(List<List<TimeSuggestion>> possibleTimeSlots, lesson lesson)
         {
-            var classrooms = _db.getAllClassRooms().Where(cr => cr.croomtype.name == lesson.subject.type);
-            var classroomsTimeSlots = classrooms.Select(cr => new Pair(cr, GetLessonTimeSlotsForClassroom(cr)));
+            List<classroom> classrooms = new List<classroom>();
+            classrooms = _db.getAllClassRooms().Where(cr => cr.croomtype != null).Where(cr => cr.croomtype.idcroomtype == lesson.subject.type).ToList();
+            var classroomsTimeSlots = classrooms.Select(cr => new Pair(cr, GetLessonTimeSlotsForClassroom(cr))).ToList();
             for (var day = 0; day < possibleTimeSlots.Count; ++day)
             {
-                foreach (var suggestion in possibleTimeSlots.ElementAt(day))
+                for (var timeSlot = 0; timeSlot < possibleTimeSlots.ElementAt(day).Count; timeSlot++)
                 {
                     foreach (var classroom in classroomsTimeSlots)
                     {
@@ -50,12 +62,12 @@ namespace TimetableServer.Controlers
                         var free = true;
                         for (var start = 0; start < lesson.subject.time.GetValueOrDefault(); ++start)
                         {
-                            if (crTimeSlots.ElementAt(day).ElementAt(suggestion.startsAt + start).Availability ==
+                            if (crTimeSlots.ElementAt(day).ElementAt(timeSlot + start).Availability ==
                                 Availability.NonAvailable)
                                 free = false;
                         }
                         if(free)
-                            suggestion.possibleClassrooms.Add(Converter.ConvertDbClassroomToClassroom(cr));
+                            possibleTimeSlots.ElementAt(day).ElementAt(timeSlot).possibleClassrooms.Add(Converter.ConvertDbClassroomToClassroom(cr));
                     }
                 }
             }

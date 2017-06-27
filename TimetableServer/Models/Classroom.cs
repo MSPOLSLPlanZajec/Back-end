@@ -9,5 +9,6 @@ namespace TimetableServer.Models
     {
         public string name { get; set; }
         public string id { get; set; }
+        public string typeId { get; set; }
     }
 }
